@@ -24,8 +24,8 @@ jobs:
 
       - name: Login to DockerHub
         uses: docker/login-action@v2
+        run: echo running docker username and token
         with:
-          run: echo running docker username and token
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -38,8 +38,8 @@ jobs:
       
       - name: Build image and push to Docker Hub and GitHub Container Registry
         uses: docker/build-push-action@v2
+        run: echo after username password
         with:
-          run: echo after username password
           # relative path to the place where source code with Dockerfile is located
           context: ./
           # Note: tags has to be all lower-case
