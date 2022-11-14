@@ -100,7 +100,7 @@ jobs:
           context: ./
           # Note: tags has to be all lower-case
           tags: |
-            DOCKERHUB_USERNAME/my_cloud_app:latest
+            psaroj/my_cloud_app:latest
           # build on feature branches, push only on main branc
           push: ${{ github.ref == 'refs/heads/master' }}
 
