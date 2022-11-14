@@ -34,19 +34,19 @@ jobs:
 # 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
 
       # Runs a single command using the runners shell
-      - name: Login n ghcr.io
-        run: echo running username and token!
+      # - name: Login n ghcr.io
+      #   run: echo running username and token!
 
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_GITHUB_TOKEN }}
+      # - name: Login to Github Packages
+      #   uses: docker/login-action@v2
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.DOCKER_GITHUB_TOKEN }}
       
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo after username and token!
+      # - name: Run a one-line script
+      #   run: echo after username and token!
 
       - name: Build image and push to Docker Hub and GitHub Container Registry
         uses: docker/build-push-action@v2
@@ -61,4 +61,4 @@ jobs:
           push: ${{ github.ref == 'refs/heads/master' }}
 
       - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+        run: echo ${{ steps.buildx.outputs.digest }}
