@@ -1,9 +1,74 @@
+# name: Docker Build and Publish to Docker Hub
+
+# on:
+#   # run it on push to the default repository branch
+#   push:
+#     branches: ["master"]
+
+# jobs:
+#   # define job to build and publish docker image
+#   build-and-push-docker-image:
+#     name: Build Docker image and push to repositories
+#     # run only when code is compiling and tests are passing
+#     runs-on: ubuntu-latest
+
+#     # steps to perform in job
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+
+#       # setup Docker buld action
+#       - name: Set up Docker Buildx
+#         id: buildx
+#         uses: docker/setup-buildx-action@v2
+
+#       # Runs a single command using the runners shell
+#       - name: Login in dockerhub
+#         run: echo running username and token!
+
+#       - name: Login to DockerHub
+#         uses: docker/login-action@v2
+#         with:
+#           username: ${{ secrets.DOCKERHUB_USERNAME }}
+#           password: ${{ secrets.DOCKERHUB_TOKEN }}
+# # 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
+
+#       # Runs a single command using the runners shell
+#       - name: Login n ghcr.io
+#         run: echo running username and token!
+
+#       - name: Login to Github Packages
+#         uses: docker/login-action@v2
+#         with:
+#           registry: ghcr.io
+#           username: ${{ github.actor }}
+#           password: ${{ secrets.GITHUB_TOKEN }}
+      
+#       # Runs a single command using the runners shell
+#       - name: Run a one-line script
+#         run: echo after username and token!
+
+#       - name: Build image and push to Docker Hub and GitHub Container Registry
+#         uses: docker/build-push-action@v2
+#         with:
+#           # relative path to the place where source code with Dockerfile is located
+#           context: ./
+#           # Note: tags has to be all lower-case
+#           tags: |
+#             psaroj/my_cloud_app:latest 
+#             ghcr.io/psaroj/my_cloud_app:latest
+#           # build on feature branches, push only on main branch
+#           push: ${{ github.ref == 'refs/heads/master' }}
+
+#       - name: Image digest
+#         run: echo ${{ steps.docker_build.outputs.digest }}
+
 name: Docker Build and Publish to Docker Hub
 
 on:
   # run it on push to the default repository branch
   push:
-    branches: ["master"]
+    branches: [master]
 
 jobs:
   # define job to build and publish docker image
@@ -22,31 +87,11 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v2
 
-      # Runs a single command using the runners shell
-      - name: Login in dockerhub
-        run: echo running username and token!
-
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-# 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
-
-      # Runs a single command using the runners shell
-      - name: Login n ghcr.io
-        run: echo running username and token!
-
-      - name: Login to Github Packages
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo after username and token!
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build image and push to Docker Hub and GitHub Container Registry
         uses: docker/build-push-action@v2
@@ -55,9 +100,8 @@ jobs:
           context: ./
           # Note: tags has to be all lower-case
           tags: |
-            psaroj/my_cloud_app:latest 
-            ghcr.io/psaroj/my_cloud_app:latest
-          # build on feature branches, push only on main branch
+            DOCKER_USERNAME/my_cloud_app:latest
+          # build on feature branches, push only on main branc
           push: ${{ github.ref == 'refs/heads/master' }}
 
       - name: Image digest
